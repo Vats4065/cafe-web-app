@@ -19,17 +19,23 @@ The Café Management System is a simple C-based console application that allows 
 
 ## File Structure
 
-./cafe-app
-./data
-menu.txt
-orders.txt
-users.txt
-./src
-admin_dashboard.c
-login.c
-signyp.c
-main.c
-user_dashboard.c
+/Café_Management_System
+├── /src  
+│ ├── main.c  
+│ ├── signup.c  
+│ ├── login.c  
+│ ├── user_dashboard.c  
+│ ├── admin_dashboard.c  
+│ ├── menu_management.c  
+│ ├── order_management.c  
+│  
+├── /data  
+│ ├── users.txt  
+│ ├── orders.txt  
+│ ├── menu.txt  
+│ └── temp_orders.txt
+|
+├── README.md
 
 ## Compilation and Execution
 
