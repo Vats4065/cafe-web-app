@@ -4,7 +4,7 @@
 
 void manage_menu();
 void view_orders();
-void view_users(); // New function to view user information
+void view_users(); 
 
 void admin_dashboard() {
     int choice;
@@ -13,7 +13,7 @@ void admin_dashboard() {
         printf("\n--- Admin Dashboard ---\n");
         printf("1. Manage Menu\n");
         printf("2. View Orders\n");
-        printf("3. View Users\n"); // New option
+        printf("3. View Users\n"); 
         printf("4. Logout\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -26,10 +26,10 @@ void admin_dashboard() {
                 view_orders();
                 break;
             case 3:
-                view_users(); // Call to new function
+                view_users(); 
                 break;
             case 4:
-                return; // Logout
+                return;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
@@ -37,9 +37,9 @@ void admin_dashboard() {
 }
 
 void manage_menu() {
-    FILE *fp = fopen("data/menu.txt", "a");
+    FILE *fp = fopen("../data/menu.txt", "a");
     char item[100];
-    float price; // Variable to store price
+    float price; 
 
     if (fp == NULL) {
         printf("Error opening menu file.\n");
@@ -49,16 +49,16 @@ void manage_menu() {
     printf("Enter new item to add to the menu: ");
     scanf(" %[^\n]", item);
     printf("Enter price for %s: ", item);
-    scanf("%f", &price); // Read price
+    scanf("%f", &price);
 
-    fprintf(fp, "%s - %.2f\n", item, price); // Save item and price
+    fprintf(fp, "%s - %.2f\n", item, price); 
     fclose(fp);
 
     printf("Menu updated successfully!\n"); 
 }
 
 void view_orders() {
-    FILE *fp = fopen("data/orders.txt", "r");
+    FILE *fp = fopen("../data/orders.txt", "r");
     char order[100];
 
     if (fp == NULL) {
@@ -74,8 +74,8 @@ void view_orders() {
     fclose(fp);
 }
 
-void view_users() { // New function to view user information
-    FILE *fp = fopen("data/users.txt", "r");
+void view_users() { 
+    FILE *fp = fopen("../data/users.txt", "r");
     char user_info[100];
 
     if (fp == NULL) {

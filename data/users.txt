@@ -1,3 +1,1 @@
-vatsal 123456 admin
 vats 123456 user
-vats 123456 

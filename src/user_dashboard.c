@@ -5,7 +5,7 @@
 void view_menu();
 void place_order(const char *username);
 void delete_order(const char *username);
-void view_user_orders(const char *username); // New function to view user's orders
+void view_user_orders(const char *username);
 
 void user_dashboard(const char *username) {
     int choice;
@@ -14,7 +14,7 @@ void user_dashboard(const char *username) {
         printf("\n--- User Dashboard ---\n");
         printf("1. View Menu\n");
         printf("2. Place Order\n");
-        printf("3. View Your Orders\n"); // New option
+        printf("3. View Your Orders\n");
         printf("4. Delete Order\n");
         printf("5. Logout\n");
         printf("Enter your choice: ");
@@ -28,13 +28,13 @@ void user_dashboard(const char *username) {
                 place_order(username);
                 break;
             case 3:
-                view_user_orders(username); // Call to new function
+                view_user_orders(username);
                 break;
             case 4:
                 delete_order(username);
                 break;
             case 5:
-                return; // Logout
+                return;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
@@ -42,42 +42,71 @@ void user_dashboard(const char *username) {
 }
 
 void view_menu() {
-    FILE *fp = fopen("data/menu.txt", "r");
+    FILE *fp = fopen("../data/menu.txt", "r");
     char item[100];
-    
+    float price;
+
     if (fp == NULL) {
         printf("Error opening menu.\n");
         return;
     }
 
     printf("Café Menu:\n");
-    while (fgets(item, sizeof(item), fp)) {
-        printf("%s", item);
+    while (fscanf(fp, "%s %f", item, &price) != EOF) {
+        printf("%s - $%.2f\n", item, price);
     }
 
     fclose(fp);
 }
 
 void place_order(const char *username) {
-    char order[100];
-    FILE *fp = fopen("data/orders.txt", "a");
+    char order_item[100];
+    int quantity;
+    float price = 0.0;
+    FILE *menu_fp = fopen("../data/menu.txt", "r");
+    FILE *orders_fp = fopen("../data/orders.txt", "a");
 
-    if (fp == NULL) {
-        printf("Error opening orders file.\n");
+    if (menu_fp == NULL || orders_fp == NULL) {
+        printf("Error opening menu or orders file.\n");
         return;
     }
 
-    printf("Enter your order: ");
-    scanf(" %[^\n]", order);
-    fprintf(fp, "%s ordered: %s\n", username, order);
-    fclose(fp);
+  
+    printf("Enter the item you want to order: ");
+    scanf(" %[^\n]", order_item);
+    printf("Enter the quantity: ");
+    scanf("%d", &quantity);
 
-    printf("Order placed successfully!\n");
+
+    char item[100];
+    float item_price;
+    int item_found = 0;
+
+    while (fscanf(menu_fp, "%s %f", item, &item_price) != EOF) {
+        if (strcmp(item, order_item) == 0) {
+            price = item_price;
+            item_found = 1;
+            break;
+        }
+    }
+
+    fclose(menu_fp);
+
+    if (item_found) {
+        float total_price = price * quantity;
+        fprintf(orders_fp, "%s ordered %d x %s at $%.2f each, Total: $%.2f\n",
+                username, quantity, order_item, price, total_price);
+        printf("Order placed successfully! Total price: $%.2f\n", total_price);
+    } else {
+        printf("Item not found in the menu.\n");
+    }
+
+    fclose(orders_fp);
 }
 
 void delete_order(const char *username) {
-    FILE *fp = fopen("data/orders.txt", "r");
-    FILE *temp_fp = fopen("data/temp_orders.txt", "w");
+    FILE *fp = fopen("../data/orders.txt", "r");
+    FILE *temp_fp = fopen("../data/temp_orders.txt", "w");
     char order[100];
     int found = 0;
 
@@ -91,26 +120,26 @@ void delete_order(const char *username) {
         printf("%s", order);
     }
 
-    // Prompt for order to delete
+   
     printf("Enter the order to delete: ");
     char order_to_delete[100];
     scanf(" %[^\n]", order_to_delete);
 
-    rewind(fp); // Reset file pointer to start
+    rewind(fp); 
     while (fgets(order, sizeof(order), fp)) {
-        // Check if the order matches
+   
         if (strstr(order, order_to_delete) == NULL) {
-            fputs(order, temp_fp); // Write to temp file if not a match
+            fputs(order, temp_fp); 
         } else {
-            found = 1; // Mark that we found the order to delete
+            found = 1; 
         }
     }
 
     fclose(fp);
     fclose(temp_fp);
 
-    remove("data/orders.txt"); // Delete original orders file
-    rename("data/temp_orders.txt", "data/orders.txt"); // Rename temp file to original
+    remove("../data/orders.txt"); 
+    rename("../data/temp_orders.txt", "../data/orders.txt"); 
 
     if (found) {
         printf("Order deleted successfully!\n");
@@ -119,9 +148,8 @@ void delete_order(const char *username) {
     }
 }
 
-// New function to view user's specific orders
 void view_user_orders(const char *username) {
-    FILE *fp = fopen("data/orders.txt", "r");
+    FILE *fp = fopen("../data/orders.txt", "r");
     char order[100];
 
     if (fp == NULL) {
@@ -130,11 +158,11 @@ void view_user_orders(const char *username) {
     }
 
     printf("Your Orders:\n");
-    int found = 0; // Flag to check if any orders are found
+    int found = 0; 
     while (fgets(order, sizeof(order), fp)) {
-        if (strstr(order, username) != NULL) { // Check if order belongs to user
+        if (strstr(order, username) != NULL) { 
             printf("%s", order);
-            found = 1; // Mark that we found at least one order
+            found = 1; 
         }
     }
 

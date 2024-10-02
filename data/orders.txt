@@ -1,1 +1,1 @@
-vats ordered: 1
+vats ordered 3 x coffee at $200.00 each, Total: $600.00

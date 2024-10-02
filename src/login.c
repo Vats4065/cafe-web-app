@@ -8,9 +8,9 @@
 void user_dashboard(const char *username);
 void admin_dashboard();
 
-// Function to authenticate the user
+
 int authenticate(const char *username, const char *password, char *role) {
-    FILE *fp = fopen("data/users.txt", "r");
+    FILE *fp = fopen("../data/users.txt", "r");
     char file_user[MAX_USER_LEN], file_pass[MAX_PASS_LEN], file_role[10];
 
     if (fp == NULL) {
@@ -22,15 +22,15 @@ int authenticate(const char *username, const char *password, char *role) {
         if (strcmp(username, file_user) == 0 && strcmp(password, file_pass) == 0) {
             strcpy(role, file_role);
             fclose(fp);
-            return 1; // Authentication successful
+            return 1; 
         }
     }
 
     fclose(fp);
-    return 0; // Authentication failed
+    return 0; 
 }
 
-// Login function
+
 void login() {
     char username[MAX_USER_LEN], password[MAX_PASS_LEN], role[10];
 
