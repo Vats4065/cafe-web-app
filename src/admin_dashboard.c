@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "menu_management.h" 
 
 void manage_menu();
 void view_orders();
@@ -14,7 +15,8 @@ void admin_dashboard() {
         printf("1. Manage Menu\n");
         printf("2. View Orders\n");
         printf("3. View Users\n"); 
-        printf("4. Logout\n");
+        printf("4. View Users\n"); 
+        printf("5. Logout\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -29,12 +31,17 @@ void admin_dashboard() {
                 view_users(); 
                 break;
             case 4:
+                view_menu();
+                break;
+            case 5:
                 return;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
     }
 }
+
+
 
 void manage_menu() {
     FILE *fp = fopen("../data/menu.txt", "a");
