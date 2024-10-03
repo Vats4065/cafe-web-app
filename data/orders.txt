@@ -1,1 +1,1 @@
-vats ordered 3 x coffee at $200.00 each, Total: $600.00
+2: abc ordered 2 x Chai - 20.00 at $20.00 each, Total: $40.00

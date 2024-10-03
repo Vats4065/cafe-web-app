@@ -11,9 +11,6 @@ void signup() {
     FILE *fp;
     char cwd[1024];
 
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        printf("Current working directory: %s\n", cwd);
-    }
 
 
     printf("Enter Username: ");
@@ -25,7 +22,7 @@ void signup() {
     scanf("%s", role);
 
 
-    printf("Attempting to open file: ../data/users.txt\n");
+ 
     fp = fopen("../data/users.txt", "a");
     if (fp == NULL) {
         printf("Error opening file: ../data/users.txt\n");
@@ -36,5 +33,5 @@ void signup() {
     fprintf(fp, "%s %s %s\n", username, password, role);
     fclose(fp);
 
-    printf("Signup successful! You can now log in.\n");
+    printf("\nSignup successful! You can now log in.\n");
 }

@@ -4,8 +4,6 @@
 #include "menu_management.h" 
 
 void manage_menu();
-void view_orders();
-void view_users(); 
 
 void admin_dashboard() {
     int choice;
@@ -15,8 +13,10 @@ void admin_dashboard() {
         printf("1. Manage Menu\n");
         printf("2. View Orders\n");
         printf("3. View Users\n"); 
-        printf("4. View Users\n"); 
-        printf("5. Logout\n");
+        printf("4. View Menu\n"); 
+        printf("5. Exit\n");
+        printf("6. Logout\n");
+
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -34,6 +34,9 @@ void admin_dashboard() {
                 view_menu();
                 break;
             case 5:
+                exit(0);
+                break;
+            case 6:
                 return;
             default:
                 printf("Invalid choice. Please try again.\n");
@@ -44,56 +47,40 @@ void admin_dashboard() {
 
 
 void manage_menu() {
-    FILE *fp = fopen("../data/menu.txt", "a");
-    char item[100];
-    float price; 
+    int choice;
 
-    if (fp == NULL) {
-        printf("Error opening menu file.\n");
-        return;
+    while (1) {
+        printf("\n--- Manage Menu ---\n");
+        printf("1. Add Menu Item\n");
+        printf("2. Edit Menu Item\n");
+        printf("3. Delete Menu Item\n");
+        printf("4. View Menu Item\n");
+        printf("5. Return to Admin Dashboard\n");
+        printf("6. Exit Application\n");  
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                add_menu_item();
+                break;
+            case 2:
+                edit_menu_item();
+                break;
+            case 3:
+                delete_menu_item();
+                break;
+            case 4:
+                view_menu();  
+                break;
+            case 5:
+                return;  
+            case 6:
+                exit(0);  
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
     }
-
-    printf("Enter new item to add to the menu: ");
-    scanf(" %[^\n]", item);
-    printf("Enter price for %s: ", item);
-    scanf("%f", &price);
-
-    fprintf(fp, "%s - %.2f\n", item, price); 
-    fclose(fp);
-
-    printf("Menu updated successfully!\n"); 
 }
 
-void view_orders() {
-    FILE *fp = fopen("../data/orders.txt", "r");
-    char order[100];
 
-    if (fp == NULL) {
-        printf("Error opening orders file.\n");
-        return;
-    }
-
-    printf("Café Orders:\n");
-    while (fgets(order, sizeof(order), fp)) {
-        printf("%s", order);
-    }
-
-    fclose(fp);
-}
-
-void view_users() { 
-    FILE *fp = fopen("../data/users.txt", "r");
-    char user_info[100];
-
-    if (fp == NULL) {
-        printf("Error opening users file.\n");
-        return;
-    }
-
-    printf("Registered Users:\n");
-    while (fgets(user_info, sizeof(user_info), fp)) {
-        printf("%s", user_info);
-    }
-
-    fclose(fp);
-}

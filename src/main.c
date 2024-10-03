@@ -11,7 +11,7 @@ int main() {
     int choice;
     
     while (1) {
-        printf("Welcome to the Café Management System\n");
+        printf("\nWelcome to the Café Management System\n");
         printf("1. Login\n");
         printf("2. Signup\n");
         printf("3. Exit\n");
